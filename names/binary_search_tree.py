@@ -1,7 +1,14 @@
-# from binary_search_tree import binary_search_tree
-import time
-# import sys
-# sys.path.append('./binary_search_tree.py')
+"""
+Binary search trees are a data structure that enforce an ordering over 
+the data they store. That ordering in turn makes it a lot more efficient 
+at searching for a particular piece of data in the tree. 
+
+This part of the project comprises two days:
+1. Implement the methods `insert`, `contains`, `get_max`, and `for_each`
+   on the BSTNode class.
+2. Implement the `in_order_print`, `bft_print`, and `dft_print` methods
+   on the BSTNode class.
+"""
 
 
 class BSTNode:
@@ -77,32 +84,52 @@ class BSTNode:
         if self.right is not None:
             self.right.for_each(fn)
 
+    # Part 2 -----------------------
 
-start_time = time.time()
+    # Print all the values in order from low to high
+    # Hint:  Use a recursive, depth first traversal
+    def in_order_print(self, node):  # left -> root -> right
+        if node is None:
+            return
+        # first go to the left recursively
+        node.in_order_print(node.left)
+        # print visited value
+        print(node.value)
+        # then go to the right recursively
+        node.in_order_print(node.right)
 
-f = open('names_1.txt', 'r')
-names_1 = f.read().split("\n")  # List containing 10000 names
-f.close()
+    # Print the value of every node, starting with the given node,
+    # in an iterative breadth first traversal
 
-f = open('names_2.txt', 'r')
-names_2 = f.read().split("\n")  # List containing 10000 names
-f.close()
+    def bft_print(self, node):  # queue
+        pass
 
-duplicates = []  # Return the list of duplicates in this data structure
-bst = BSTNode(names_2[1])  # use BST for names in names_2
-# Replace the nested for loops below with your improvements
-for name1 in names_1:
-    bst.insert(name1)
+    # Print the value of every node, starting with the given node,
+    # in an iterative depth first traversal
+    def dft_print(self, node):  # stack
+        pass
 
-for name2 in names_2:
-    if bst.contains(name2):
-        duplicates.append(name2)
+    # Stretch Goals -------------------------
+    # Note: Research may be required
 
-end_time = time.time()
-print(f"{len(duplicates)} duplicates:\n\n{', '.join(duplicates)}\n\n")
-print(f"runtime: {end_time - start_time} seconds")
+    # Print Pre-order recursive DFT
+    def pre_order_dft(self, node):  # root -> left -> right
+        if node is None:
+            return
+        # first print visited value
+        print(node.value)
+        # then go left recursively
+        node.pre_order_dft(node.left)
+        # then go to the right recursively
+        node.pre_order_dft(node.right)
 
-# ---------- Stretch Goal -----------
-# Python has built-in tools that allow for a very efficient approach to this problem
-# What's the best time you can accomplish?  Thare are no restrictions on techniques or data
-# structures, but you may not import any additional libraries that you did not write yourself.
+    # Print Post-order recursive DFT
+    def post_order_dft(self, node):  # left -> right -> root
+        if node is None:
+            return
+        # first go to the left recursively
+        node.post_order_dft(node.left)
+        # then go to the right recursively
+        node.post_order_dft(node.right)
+        # visited value
+        print(node.value)
