@@ -7,13 +7,19 @@ class RingBuffer:
         self.current = None
         self.storage = DoublyLinkedList()
 
-    def append(self, item):
+    def append(self, item):  # queue
+        # if list is not full
         if self.capacity > self.storage.length:
+            # add item to end
             self.storage.add_to_tail(item)
+            # set current old item to the front
             self.current = self.storage.head
+        # if list is full
         elif self.capacity == self.storage.length:
+            # delete the oldest item
             delete = self.storage.head
             self.storage.remove_from_head()
+            # then add new item to the end
             self.storage.add_to_tail(item)
             if delete == self.current:
                 self.current = self.storage.tail
